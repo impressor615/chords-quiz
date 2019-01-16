@@ -1,9 +1,22 @@
 import '@/assets/scss/main.scss';
 
-import React from "react";
+import React, { PureComponent } from "react";
 import ReactDOM from "react-dom";
 
+import Piano from '@/components/Piano';
+
+class App extends PureComponent {
+  render() {
+    return (
+      <div>
+        <Piano />
+      </div>
+    );
+  }
+}
+
+
 ReactDOM.render(
-  <div>Hello React!</div>,
+  <App />,
   document.getElementById("app"),
 );

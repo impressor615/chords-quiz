@@ -1,0 +1,14 @@
+.piano {
+  .white-key {
+    border: 1px solid black;
+    width: 50px;
+    height: 200px;
+  }
+
+  .black-key {
+    border: 1px solid white;
+    background-color: black;
+    width: 50px;
+    height: 150px;
+  }
+}
