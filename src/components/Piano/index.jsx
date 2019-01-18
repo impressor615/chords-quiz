@@ -24,6 +24,8 @@ const BlackKey = ({ name, onClick, style, ...rest }) => (
   />
 );
 
+// TODO: svg animation 추가해보기
+// TODO: resize 이벤트 추가
 const SCALES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const BLACK_SCALES = ['C#', 'D#', 'F#', 'G#', 'A#'];
 class Piano extends PureComponent {
@@ -33,6 +35,7 @@ class Piano extends PureComponent {
     this.state = {
       chord: [],
       keyWidth: 50,
+      count: 4,
     };
   }
 
@@ -45,7 +48,7 @@ class Piano extends PureComponent {
 
   onClickKey(e) {
     const { name } = e.currentTarget;
-    const { chord } = this.state;
+    const { chord, count } = this.state;
     if (chord.includes(name)) {
       this.setState({
         chord: [...chord]
@@ -54,7 +57,7 @@ class Piano extends PureComponent {
       return;
     }
 
-    if (chord.length === 3) {
+    if (chord.length === count) {
       this.setState({ chord: [name] });
       return;
     }
