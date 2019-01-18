@@ -1,14 +1,66 @@
 .piano {
+  position: relative;
+
+  .white-key,
+  .black-key {
+    cursor: pointer;
+    position: relative;
+    width: 14.28%;
+  }
+
+  .white-key:focus,
+  .black-key:focus {
+    outline: none;
+  }
+
   .white-key {
-    border: 1px solid black;
-    width: 50px;
-    height: 200px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
+  }
+
+  .white-key:first-child {
+    border-left: 1px solid black;
   }
 
   .black-key {
-    border: 1px solid white;
+    position: absolute;
+    top: 0;
+
+    border-color: white;
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
     background-color: black;
-    width: 50px;
-    height: 150px;
+  }
+
+  .black-key:first-child {
+    border-left: 1px solid white;
+  }
+
+  .black-key:hover,
+  .white-key:hover,
+  .black-key-active,
+  .white-key-active {
+    box-shadow: inset 0 0 20px lightgray;
+  }
+
+  .white-key-active:after,
+  .black-key-active:after {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+
+    content: '';
+    border: 5px solid;
+    border-radius: 50%;
+  }
+
+  .white-key-active:after {
+    border-color: black;
+  }
+
+  .black-key-active:after {
+    border-color: white;
   }
 }
