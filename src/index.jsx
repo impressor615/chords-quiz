@@ -4,6 +4,7 @@ import React, { PureComponent } from "react";
 import ReactDOM from "react-dom";
 
 import Piano from '@/components/Piano';
+import MusicPaper from '@/components/MusicPaper';
 
 class App extends PureComponent {
   render() {
@@ -12,6 +13,7 @@ class App extends PureComponent {
         <div className="piano-wrapper">
           <Piano />
         </div>
+        <MusicPaper />
       </div>
     );
   }
