@@ -2,30 +2,33 @@ import './style.scss'
 
 import React, { PureComponent } from 'react';
 import classnames from 'classnames';
+import withNotesContext from '@/withNotesContext';
 
-const Note = ({ chord = '', between }) => (
+const Note = ({ note = '', left, right }) => (
   <div className={classnames(
-    `music-paper-note music-paper-note-${chord}`,
-    { between },
+    `music-paper-note music-paper-note-${note}`,
+    { left, right },
   )} />
 );
 
 const WholeNote = () => (
-  <div className="music-paper-whole-note" />
+  <div className="music-paper-whole-note-wrapper">
+    <div className="music-paper-whole-note" />
+  </div>
 );
 
+// TODO: #추가
+// TODO: 높은 음자리표 추가
 class MusicPaper extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+  renderNotes() {
+    const { notes } = this.props;
+    return notes.map((note) => {
+      if (note === 'C') {
+        return <WholeNote key={note} />
+      }
 
-  // TODO: Note 오른쪽으로 움직여야하는지 아닌지 판단해서 render를 하는 것이?
-  renderNote(chord) {
-    if (chord === 'C') {
-      return <WholeNote />
-    }
-
-    <Note chord={chord} />
+      return <Note key={note} note={note} />
+    });
   }
 
   render() {
@@ -36,9 +39,10 @@ class MusicPaper extends PureComponent {
             <div key={index.toString()} className="music-paper-line" />
           ))
         }
+        { this.renderNotes() }
       </div>
     );
   }
 }
 
-export default MusicPaper;
+export default withNotesContext(MusicPaper);

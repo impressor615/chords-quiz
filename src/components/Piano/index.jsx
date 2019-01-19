@@ -2,6 +2,7 @@ import './style.scss'
 
 import React, { PureComponent } from 'react';
 import classnames from 'classnames';
+import withNotesContext from '@/withNotesContext';
 
 
 const WhiteKey = ({ name, onClick, height, ...rest }) => (
@@ -27,15 +28,13 @@ const BlackKey = ({ name, onClick, style, ...rest }) => (
 // TODO: svg animation 추가해보기
 // TODO: resize 이벤트 추가
 const SCALES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-const BLACK_SCALES = ['C#', 'D#', 'F#', 'G#', 'A#'];
+const BLACK_SCALES = ['C-sharp', 'D-sharp', 'F-sharp', 'G-sharp', 'A-sharp'];
 class Piano extends PureComponent {
   constructor(props) {
     super(props);
     this.onClickKey = this.onClickKey.bind(this);
     this.state = {
-      chord: [],
       keyWidth: 50,
-      count: 4,
     };
   }
 
@@ -48,21 +47,21 @@ class Piano extends PureComponent {
 
   onClickKey(e) {
     const { name } = e.currentTarget;
-    const { chord, count } = this.state;
-    if (chord.includes(name)) {
-      this.setState({
-        chord: [...chord]
-          .filter(item => item !== name),
+    const { notes, dispatch, count } = this.props;
+    if (notes.includes(name)) {
+      dispatch({
+        notes: [...notes]
+          .filter(item => item !== name).sort(),
       });
       return;
     }
 
-    if (chord.length === count) {
-      this.setState({ chord: [name] });
+    if (notes.length === count) {
+      dispatch({ notes: [name] });
       return;
     }
 
-    this.setState({ chord: [...chord, name] });
+    dispatch({ notes: [...notes, name].sort() });
   }
 
   placeBlackKey(index) {
@@ -75,14 +74,15 @@ class Piano extends PureComponent {
   }
 
   render() {
-    const { chord, keyWidth } = this.state;
+    const { notes } = this.props;
+    const { keyWidth } = this.state;
     return (
       <div className="piano">
         {
           SCALES.map(scale => (
             <WhiteKey
               className={classnames(
-                { 'white-key-active': chord.includes(scale)},
+                { 'white-key-active': notes.includes(scale)},
               )}
               key={scale}
               name={scale}
@@ -97,7 +97,7 @@ class Piano extends PureComponent {
               key={scale}
               className={classnames(
                 `black-key-${index}`,
-                { 'black-key-active': chord.includes(scale)},
+                { 'black-key-active': notes.includes(scale)},
               )}
               name={scale}
               onClick={this.onClickKey}
@@ -113,4 +113,4 @@ class Piano extends PureComponent {
   }
 }
 
-export default Piano;
+export default withNotesContext(Piano);

@@ -16,7 +16,7 @@
   &-note,
   &-whole-note {
     position: absolute;
-    left: 50%;
+    left: 30%;
     transform: translateX(-50%);
 
     width: 50px;
@@ -27,33 +27,36 @@
   }
 
   &-note {
-    $notes: E, F, G, A, B;
+    background-color: white;
+    $notes: D, E, F, G, A, B;
     @each $note in $notes {
       $i: index($notes, $note);
-      $y-coord: -40px * $i;
+      $y-coord: (-20.5px * ($i - 1));
+      $x-coord: 10px + (48 * ($i - 1));
       &-#{$note} {
-        transform: translate(-50%, $y-coord);
+        transform: translate($x-coord, $y-coord);
       }
     }
 
     $sharp-notes: C-sharp, D-sharp, F-sharp, G-sharp, A-sharp;
     @for $i from 1 through length($sharp-notes) {
       $note-name: nth($sharp-notes, $i);
-      $y-coord: (-40 * $i) + 20px;
+      $y-coord: (-41 * $i) + 21px;
       &-#{$note-name} {
         transform: translate(-50%, $y-coord);
       }
-
-      &-#{$note-name}.between {
-        transform: translate(30%, $y-coord);
-      }
     }
+  }
 
+  &-whole-note-wrapper {
+    position: absolute;
+    bottom: -80px;
+    left: 30%;
+    transform: translate(-50%, -20.5px);
   }
 
   &-whole-note {
     position: relative;
-    top: 40px;
   }
 
   &-whole-note:after {
