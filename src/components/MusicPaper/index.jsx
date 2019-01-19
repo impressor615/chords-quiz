@@ -1,9 +1,13 @@
 import './style.scss'
 
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import classnames from 'classnames';
 
-const Note = () => (
-  <div className="music-paper-note" />
+const Note = ({ chord = '', between }) => (
+  <div className={classnames(
+    `music-paper-note music-paper-note-${chord}`,
+    { between },
+  )} />
 );
 
 const WholeNote = () => (
@@ -15,30 +19,24 @@ class MusicPaper extends PureComponent {
     super(props);
   }
 
+  // TODO: Note 오른쪽으로 움직여야하는지 아닌지 판단해서 render를 하는 것이?
+  renderNote(chord) {
+    if (chord === 'C') {
+      return <WholeNote />
+    }
+
+    <Note chord={chord} />
+  }
+
   render() {
     return (
-      <Fragment>
-        <div className="music-paper">
-          {
-            Array.from({ length: 5 }).map((_, index) => (
-              <div key={index.toString()} className="music-paper-line" />
-            ))
-          }
-          {
-            Array.from({ length: 2 }).map((_, index) => (
-              <div
-                key={index.toString()}
-                className={`music-paper-vertical-line music-paper-vertical-line-${index}`}            />
-
-            ))
-          }
-        </div>
-        <div className="music-paper-answer">
-          <Note />
-          <Note />
-          <WholeNote />
-        </div>
-      </Fragment>
+      <div className="music-paper">
+        {
+          Array.from({ length: 5 }).map((_, index) => (
+            <div key={index.toString()} className="music-paper-line" />
+          ))
+        }
+      </div>
     );
   }
 }
