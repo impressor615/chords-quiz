@@ -19,6 +19,7 @@ const WholeNote = () => (
 
 // TODO: #추가
 // TODO: 높은 음자리표 추가
+// TODO: 실제 음 audio 추가
 class MusicPaper extends PureComponent {
   renderNotes() {
     const { notes } = this.props;
